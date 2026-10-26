@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Questionário IA · Projeto Piloto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#eef1f0; --sheet:#ffffff; --ink:#1c2830; --muted:#5b6a72; --line:#c9d2d4;
+  --accent:#c4501f; --accent-ink:#ffffff; --field:#f7f9f8; --ok:#2f7a4d; --warn:#9a5b00;
+  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
+  --body:"Barlow","Segoe UI",Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --paper:#141b1f; --sheet:#1c252b; --ink:#e4eaec; --muted:#9aa9b0; --line:#34424a;
+  --accent:#e2703f; --accent-ink:#161c20; --field:#222d34; --ok:#5cbf85; --warn:#e0a64a; color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+header.top{display:flex;flex-direction:column;gap:10px;border-top:6px solid var(--accent);padding-top:14px}
+.meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.02;margin:0;text-wrap:balance}
+.lead{margin:0;color:var(--muted);max-width:62ch}
+.notice{border:1px solid var(--line);border-left:4px solid var(--warn);background:var(--sheet);padding:12px 14px;border-radius:4px;font-size:15px}
+.notice.ok{border-left-color:var(--ok)}
+form{background:var(--sheet);border:1px solid var(--line);border-radius:6px}
+fieldset{border:0;margin:0;padding:22px clamp(16px,4vw,28px);display:grid;gap:18px;border-bottom:1px solid var(--line)}
+legend{float:left;width:100%;padding:0;margin-bottom:2px;display:flex;align-items:baseline;gap:10px;font-family:var(--display);font-weight:600;font-size:22px}
+legend .sec{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:500}
+.q{display:grid;gap:6px;min-width:0}
+.q > label,.q > .ql{font-weight:600;font-size:15.5px}
+.hint{font-size:13.5px;color:var(--muted);margin-top:-4px}
+.key{border-left:3px solid var(--accent);padding-left:12px}
+input[type=text],select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:4px;padding:9px 11px}
+textarea{min-height:88px;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:560px){.row2{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--field);border-radius:999px;padding:5px 12px 5px 9px;font-size:14.5px;cursor:pointer}
+.chips input{accent-color:var(--accent);margin:0}
+.chips label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--field))}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:18px clamp(16px,4vw,28px)}
+.btn{font:600 16px var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:4px;padding:11px 22px;cursor:pointer}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.status{font-size:14.5px;color:var(--muted)}
+.status.ok{color:var(--ok)}.status.err{color:var(--accent)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.thanks{background:var(--sheet);border:1px solid var(--line);border-top:4px solid var(--ok);border-radius:6px;padding:28px clamp(16px,4vw,28px);display:grid;gap:8px}
+.thanks h2{font-family:var(--display);font-size:30px;margin:0}
+.thanks p{margin:0;color:var(--muted)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="meta"><span>Ref. IA-01 · Projeto Piloto</span><span>Confidencial · uso interno</span></div>
+    <h1>Como pode a IA ajudar a tua equipa?</h1>
+    <p class="lead">Estamos a pensar em usar uma ferramenta de inteligência artificial em várias equipas. Demora cerca de 5 minutos.</p>
+  </header>
+
+  <div id="cfg" class="notice" hidden>Formulário ainda não configurado: falta colocar o endereço do Formspree no ficheiro <code>index.html</code>.</div>
+
+  <form id="f" novalidate>
+    <div class="hp" aria-hidden="true"><label for="_gotcha">Não preencher</label><input type="text" id="_gotcha" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+    <fieldset>
+      <legend><span class="sec">A</span><span>Identificação</span></legend>
+      <div class="row2">
+        <div class="q"><label for="nome">Nome</label><input type="text" id="nome" autocomplete="name" required></div>
+        <div class="q"><label for="equipa">Equipa</label>
+          <select id="equipa" required>
+            <option value="">Escolher…</option>
+            <option>Programação</option><option>Gestão</option><option>Mecânica</option><option>QE</option>
+            <option>GTC</option><option>França</option><option>RH</option><option>Obras</option><option>Outra</option>
+          </select></div>
+      </div>
+      <div class="q"><label for="funcao">Função</label><input type="text" id="funcao"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="sec">B</span><span>Trabalho do dia a dia</span></legend>
+      <div class="q"><label for="tarefas">Que tarefas fazes com frequência que sejam demoradas ou repetitivas?</label>
+        <div class="hint">Ex.: relatórios, emails, atas, preenchimento de documentos, orçamentos.</div>
+        <textarea id="tarefas"></textarea></div>
+      <div class="q"><span class="ql">Com que tipo de documentos trabalhas mais?</span><div class="chips" id="docs"></div></div>
+      <div class="q"><label for="escrita">Escreves muitos emails, relatórios ou comunicações? Para quem?</label><textarea id="escrita"></textarea></div>
+      <div class="q"><span class="ql">Em que línguas escreves?</span><div class="chips" id="linguas"></div></div>
+      <div class="q"><label for="analise">Precisas de analisar dados, comparar documentos ou procurar informação em manuais e normas?</label><textarea id="analise"></textarea></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="sec">C</span><span>Onde a IA faria mais diferença</span></legend>
+      <div class="q key"><label for="dificuldade">Se pudesses ter um assistente para uma tarefa específica, qual seria?</label>
+        <div class="hint">Sê concreto: "demoro 2 horas por semana a fazer o relatório X" ajuda-nos muito mais do que "relatórios".</div>
+        <textarea id="dificuldade"></textarea></div>
+      <div class="q"><label for="horas">Quantas horas por semana gastas nessas tarefas, aproximadamente?</label>
+        <select id="horas"><option value="">Escolher…</option><option>Menos de 1 h</option><option>1 a 3 h</option><option>3 a 6 h</option><option>6 a 10 h</option><option>Mais de 10 h</option></select></div>
+    </fieldset>
+
+    <fieldset>
+      <legend><span class="sec">D</span><span>Experiência e preocupações</span></legend>
+      <div class="q"><span class="ql">Já usaste alguma ferramenta de IA?</span><div class="chips" id="exp"></div></div>
+      <div class="q"><label for="expTxt">Se sim, para quê?</label><input type="text" id="expTxt"></div>
+      <div class="q"><span class="ql">Tens alguma preocupação sobre usar IA no trabalho?</span><div class="chips" id="preoc"></div></div>
+      <div class="q"><label for="preocTxt">Outras dúvidas ou comentários</label><textarea id="preocTxt"></textarea></div>
+      <div class="q"><label for="quem">Na tua equipa, quem achas que tiraria mais partido da ferramenta? Porquê?</label><textarea id="quem"></textarea></div>
+    </fieldset>
+
+    <div class="actions">
+      <button type="submit" class="btn" id="submit">Enviar respostas</button>
+      <span class="status" id="status" role="status"></span>
+    </div>
+  </form>
+
+  <section class="thanks" id="thanks" hidden>
+    <h2>Obrigado!</h2>
+    <p>As tuas respostas foram enviadas. Podes fechar esta página.</p>
+  </section>
+</div>
+
+<script>
+/* ===== CONFIGURAÇÃO: cola aqui o endereço do teu formulário Formspree ===== */
+const FORMSPREE_URL = "https://formspree.io/f/moeeedee";
+/* ======================================================================== */
+
+const OPTS = {
+  docs: ["Word","Excel","PDF","Email","Desenhos técnicos","Normas e regulamentos","Contratos","Orçamentos","Código"],
+  linguas: ["Português","Francês","Inglês","Espanhol"],
+  exp: ["Nunca usei","ChatGPT","Copilot","Claude","Gemini","Outra"],
+  preoc: ["Confidencialidade dos dados","Fiabilidade das respostas","Falta de tempo para aprender","Substituição de funções","Nenhuma"]
+};
+const $ = id => document.getElementById(id);
+for (const [key, list] of Object.entries(OPTS)){
+  list.forEach((v,i)=>{
+    const lab = document.createElement("label"), inp = document.createElement("input");
+    inp.type = "checkbox"; inp.value = v; inp.id = `${key}-${i}`;
+    lab.append(inp, document.createTextNode(v)); $(key).append(lab);
+  });
+}
+const configured = !FORMSPREE_URL.includes("COLOCAR_ID_AQUI");
+if (!configured) $("cfg").hidden = false;
+
+const LABELS = {
+  nome:"Nome", equipa:"Equipa", funcao:"Função", tarefas:"Tarefas repetitivas", docs:"Documentos",
+  escrita:"Escrita", linguas:"Línguas", analise:"Análise de informação", dificuldade:"Tarefa para o assistente",
+  horas:"Horas por semana", exp:"Experiência com IA", expTxt:"Usou para", preoc:"Preocupações",
+  preocTxt:"Comentários", quem:"Quem deve testar"
+};
+
+$("f").addEventListener("submit", async ev => {
+  ev.preventDefault();
+  const st = $("status"); st.className = "status";
+  const nome = $("nome").value.trim(), equipa = $("equipa").value;
+  if (!nome || !equipa){ st.textContent = "Preenche o nome e a equipa."; st.className = "status err"; return; }
+  if (!configured){ st.textContent = "O formulário ainda não está configurado."; st.className = "status err"; return; }
+  const body = { _subject: `Questionário IA: ${nome} (${equipa})`, _gotcha: $("_gotcha").value };
+  for (const [k, label] of Object.entries(LABELS)){
+    body[label] = OPTS[k]
+      ? [...$(k).querySelectorAll("input:checked")].map(i=>i.value).join(", ")
+      : $(k).value.trim();
+  }
+  $("submit").disabled = true; st.textContent = "A enviar…";
+  try {
+    const r = await fetch(FORMSPREE_URL, {
+      method: "POST",
+      headers: { "Content-Type":"application/json", "Accept":"application/json" },
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) throw new Error(r.status);
+    $("f").hidden = true; $("thanks").hidden = false; window.scrollTo(0,0);
+  } catch(e){
+    st.textContent = "Não foi possível enviar. Verifica a ligação e tenta novamente.";
+    st.className = "status err"; $("submit").disabled = false;
+  }
+});
+</script>
+</body>
+</html>
