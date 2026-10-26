@@ -7,65 +7,73 @@
 <title>Questionário IA · Projeto Piloto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 <style>
+/* Cores OCRAMclima: verde-sálvia, azul-petróleo e petróleo escuro */
 :root{
-  --paper:#eef1f0; --sheet:#ffffff; --ink:#1c2830; --muted:#5b6a72; --line:#c9d2d4;
-  --accent:#c4501f; --accent-ink:#ffffff; --field:#f7f9f8; --ok:#2f7a4d; --warn:#9a5b00;
-  --display:"Barlow Condensed","Arial Narrow",Arial,sans-serif;
-  --body:"Barlow","Segoe UI",Helvetica,Arial,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --sage:#87b69e; --teal:#52818f; --teal-dk:#426773; --deep:#00434d; --mint:#d8f3dc;
+  --paper:#f4f4f4; --sheet:#ffffff; --ink:#1f2a2e; --muted:#495057; --line:#d5dde0;
+  --accent:var(--teal); --accent-ink:#ffffff; --field:#f8f9fa; --ok:#2f7a5c; --err:#b3412b;
+  --font:"Plus Jakarta Sans","Segoe UI",Helvetica,Arial,sans-serif;
   color-scheme:light;
 }
-@media (prefers-color-scheme: dark){:root{
-  --paper:#141b1f; --sheet:#1c252b; --ink:#e4eaec; --muted:#9aa9b0; --line:#34424a;
-  --accent:#e2703f; --accent-ink:#161c20; --field:#222d34; --ok:#5cbf85; --warn:#e0a64a; color-scheme:dark}}
+[hidden]{display:none!important}
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
-.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
-header.top{display:flex;flex-direction:column;gap:10px;border-top:6px solid var(--accent);padding-top:14px}
-.meta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
-h1{font-family:var(--display);font-weight:700;font-size:clamp(34px,6vw,48px);line-height:1.02;margin:0;text-wrap:balance}
-.lead{margin:0;color:var(--muted);max-width:62ch}
-.notice{border:1px solid var(--line);border-left:4px solid var(--warn);background:var(--sheet);padding:12px 14px;border-radius:4px;font-size:15px}
-.notice.ok{border-left-color:var(--ok)}
-form{background:var(--sheet);border:1px solid var(--line);border-radius:6px}
-fieldset{border:0;margin:0;padding:22px clamp(16px,4vw,28px);display:grid;gap:18px;border-bottom:1px solid var(--line)}
-legend{float:left;width:100%;padding:0;margin-bottom:2px;display:flex;align-items:baseline;gap:10px;font-family:var(--display);font-weight:600;font-size:22px}
-legend .sec{font-family:var(--mono);font-size:12px;color:var(--accent);font-weight:500}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55}
+.band{background:linear-gradient(45deg,var(--sage) 0%,var(--teal) 100%);color:#fff;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:22px 34px}
+.band-inner{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.brandrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.logo{height:46px;width:auto;display:block}
+.logo-txt{font-weight:800;font-size:24px;letter-spacing:-.01em}
+.meta{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+h1{font-weight:800;font-size:clamp(30px,5.5vw,44px);line-height:1.08;margin:6px 0 0;text-wrap:balance;letter-spacing:-.015em}
+.lead{margin:0;max-width:62ch;opacity:.95}
+.main{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 56px}
+.wrap{max-width:760px;margin:-18px auto 0;display:flex;flex-direction:column;gap:20px}
+.notice{border:1px solid var(--line);border-left:4px solid var(--err);background:var(--sheet);padding:12px 14px;border-radius:8px;font-size:15px}
+form{background:var(--sheet);border:1px solid var(--line);border-radius:12px;box-shadow:0 6px 24px rgba(0,67,77,.08)}
+fieldset{border:0;margin:0;padding:24px clamp(16px,4vw,30px);display:grid;gap:18px;border-bottom:1px solid var(--line)}
+legend{float:left;width:100%;padding:0;margin-bottom:2px;display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;color:var(--deep)}
+legend .sec{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--mint);color:var(--deep);font-size:13px;font-weight:800}
 .q{display:grid;gap:6px;min-width:0}
-.q > label,.q > .ql{font-weight:600;font-size:15.5px}
+.q > label,.q > .ql{font-weight:600;font-size:15px}
 .hint{font-size:13.5px;color:var(--muted);margin-top:-4px}
-.key{border-left:3px solid var(--accent);padding-left:12px}
-input[type=text],select,textarea{width:100%;font:inherit;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:4px;padding:9px 11px}
+.key{border-left:3px solid var(--sage);padding-left:12px}
+input[type=text],select,textarea{width:100%;font:inherit;font-size:15px;color:var(--ink);background:var(--field);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
 textarea{min-height:88px;resize:vertical}
-input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media (max-width:560px){.row2{grid-template-columns:1fr}}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.chips label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--field);border-radius:999px;padding:5px 12px 5px 9px;font-size:14.5px;cursor:pointer}
-.chips input{accent-color:var(--accent);margin:0}
-.chips label:has(input:checked){border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--field))}
-.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:18px clamp(16px,4vw,28px)}
-.btn{font:600 16px var(--body);background:var(--accent);color:var(--accent-ink);border:0;border-radius:4px;padding:11px 22px;cursor:pointer}
+.chips label{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--field);border-radius:999px;padding:6px 13px 6px 10px;font-size:14px;cursor:pointer}
+.chips input{accent-color:var(--teal);margin:0}
+.chips label:has(input:checked){border-color:var(--teal);background:var(--mint);color:var(--deep)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px;padding:20px clamp(16px,4vw,30px)}
+.btn{font:700 16px var(--font);background:var(--deep);color:#fff;border:0;border-radius:999px;padding:12px 26px;cursor:pointer}
+.btn:hover{background:var(--teal-dk)}
 .btn[disabled]{opacity:.5;cursor:not-allowed}
 .status{font-size:14.5px;color:var(--muted)}
-.status.ok{color:var(--ok)}.status.err{color:var(--accent)}
+.status.err{color:var(--err)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.thanks{background:var(--sheet);border:1px solid var(--line);border-top:4px solid var(--ok);border-radius:6px;padding:28px clamp(16px,4vw,28px);display:grid;gap:8px}
-.thanks h2{font-family:var(--display);font-size:30px;margin:0}
+.thanks{background:var(--sheet);border:1px solid var(--line);border-top:5px solid var(--sage);border-radius:12px;padding:32px clamp(16px,4vw,30px);display:grid;gap:8px;box-shadow:0 6px 24px rgba(0,67,77,.08)}
+.thanks h2{font-size:28px;font-weight:800;margin:0;color:var(--deep)}
 .thanks p{margin:0;color:var(--muted)}
-@media (prefers-reduced-motion: reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header class="top">
-    <div class="meta"><span>Ref. IA-01 · Projeto Piloto</span><span>Confidencial · uso interno</span></div>
+<header class="band">
+  <div class="band-inner">
+    <div class="brandrow">
+      <img class="logo" src="data:image/webp;base64,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" alt="OCRAMclima" width="169" height="46">
+      <span class="meta">Ref. IA-01 · Projeto Piloto</span>
+    </div>
     <h1>Como pode a IA ajudar a tua equipa?</h1>
     <p class="lead">Estamos a pensar em usar uma ferramenta de inteligência artificial em várias equipas. Demora cerca de 5 minutos.</p>
-  </header>
+  </div>
+</header>
+<div class="main">
+<div class="wrap">
 
   <div id="cfg" class="notice" hidden>Formulário ainda não configurado: falta colocar o endereço do Formspree no ficheiro <code>index.html</code>.</div>
 
@@ -78,8 +86,8 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
         <div class="q"><label for="equipa">Equipa</label>
           <select id="equipa" required>
             <option value="">Escolher…</option>
-            <option>Programação</option><option>Gestão</option><option>Mecânica</option><option>QE</option>
-            <option>GTC</option><option>França</option><option>RH</option><option>Obras</option><option>Outra</option>
+            <option>Gestão</option><option>Financeiro</option><option>IDI Compras</option><option>Orçamentação</option>
+            <option>QE</option><option>GTC</option><option>Mecânica</option><option>Marketing</option><option>Outro</option>
           </select></div>
       </div>
       <div class="q"><label for="funcao">Função</label><input type="text" id="funcao"></div>
@@ -124,6 +132,7 @@ input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-vis
     <h2>Obrigado!</h2>
     <p>As tuas respostas foram enviadas. Podes fechar esta página.</p>
   </section>
+</div>
 </div>
 
 <script>
